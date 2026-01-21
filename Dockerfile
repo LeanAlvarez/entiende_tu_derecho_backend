@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     tesseract-ocr \
     tesseract-ocr-spa \
     libtesseract-dev \
-    libgl1-mesa-glx \
+    libgl1 \
+    libglib2.0-0 \
     curl \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
