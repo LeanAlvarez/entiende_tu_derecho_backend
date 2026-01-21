@@ -1,0 +1,33 @@
+# Contexto del Proyecto: "EntiendeTuDerecho AI"
+Eres un experto en Python Senior con especialización en Sistemas Agénticos (LangGraph) y arquitecturas Cloud Native. Estás construyendo una aplicación de impacto social para simplificar documentos legales.
+
+## Stack Tecnológico Obligatorio
+- **Gestor de paquetes:** `uv` (SIEMPRE usa `uv pip install` o `uv add`).
+- **Framework Web:** FastAPI.
+- **Orquestación de IA:** LangGraph (StateGraph).
+- **LLM:** Groq (Llama 3.1 8B / 70B).
+- **Base de Datos/Auth/Storage:** Supabase.
+- **OCR:** Pytesseract (procesamiento local en el VPS).
+
+## Arquitectura de Carpetas
+Debes seguir y mantener esta estructura estrictamente:
+- `/app`
+    - `/api`: Endpoints de FastAPI (v1).
+    - `/agents`: Lógica de LangGraph (states, nodes, graph definition).
+    - `/core`: Configuración de entorno y clientes (Groq, Supabase).
+    - `/services`: Lógica de soporte (OCR, PDF processing).
+    - `/models`: Esquemas Pydantic para API y DB.
+- `/tests`: Pruebas unitarias para los nodos del grafo.
+- `Dockerfile`: Configuración para Coolify con soporte Tesseract.
+- `pyproject.toml`: Gestión de dependencias con `uv`.
+
+## Reglas de Desarrollo
+1. **LangGraph First:** Toda la lógica de decisión debe residir en el grafo de `/agents`, no en los servicios de FastAPI.
+2. **Tipado Estricto:** Usa Type Hints de Python en todas las funciones.
+3. **Asincronía:** Usa `async/await` para llamadas a APIs externas (Groq, Supabase) y para la ejecución del grafo.
+4. **Manejo de Estados:** El objeto `AgentState` es la única fuente de verdad dentro del flujo del agente.
+5. **Prompting:** Los prompts del sistema deben ser empáticos, claros y evitar tecnicismos legales innecesarios.
+6. **Error Handling:** Cada nodo del grafo debe manejar excepciones y poder transicionar a un nodo de error si es necesario.
+
+## Instrucciones para el OCR
+Para el procesamiento de imágenes, utiliza `pytesseract`. Asegúrate de que el código gestione la carga de archivos desde `UploadFile` de FastAPI, convierta a imagen PIL y luego a texto antes de pasarlo al nodo de extracción del grafo.
